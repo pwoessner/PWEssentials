@@ -10,7 +10,7 @@ import Logging
 
 let errorLogger = Logger(label: "Error")
 
-extension Error {
+public extension Error {
 	func log(_ caller: Any) {
 		errorLogger.error("\(String(describing: caller)): [\(self)] \(self.localizedDescription)")
 	}

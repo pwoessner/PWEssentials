@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Theme {
+public protocol Theme {
 	var primary: String { get }
 	var secondary: String { get }
 	var tertiary: String { get }
@@ -21,10 +21,10 @@ protocol Theme {
 	var secondaryTint: String { get }
 }
 
-class ThemeManager {
-	static var shared = ThemeManager()
+open class ThemeManager {
+	public static var shared = ThemeManager()
 
-	private(set) var currentTheme: Theme
+	open private(set) var currentTheme: Theme
 
 	private init() {
 		self.currentTheme = DefaultTheme()

@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-typealias ButtonAction = (() -> Void)
+public typealias ButtonAction = (() -> Void)
 
-struct AlertButton {
+public struct AlertButton {
 	let title: String
 	let action: ButtonAction?
 	let style: UIAlertAction.Style
 }
 
-class Alert {
+public class Alert {
 	let title: String
 	let message: String
 	let style = UIAlertController.Style.alert

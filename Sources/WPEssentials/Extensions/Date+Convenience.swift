@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
 	func getDate(in days: Int, _ component: Calendar.Component) -> Date {
 		Calendar.current.date(byAdding: component, value: days, to: self) ?? Date()
 	}

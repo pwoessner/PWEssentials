@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
-class CollectionViewController<S: Hashable, I: Hashable>: UIViewController {
-	typealias Item = I
-	typealias Section = S
-	typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
-	typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item>
-	typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+open class CollectionViewController<S: Hashable, I: Hashable>: UIViewController {
+	public typealias Item = I
+	public typealias Section = S
+	public typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
+	public typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item>
+	public typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
 
-	var dataSource: DataSource!
-	var collectionView: UICollectionView!
+	open var dataSource: DataSource!
+	open var collectionView: UICollectionView!
 
-	func reconfigureItems(_ items: [Item]) {
+	open func reconfigureItems(_ items: [Item]) {
 		var snapshot = self.dataSource.snapshot()
 		if #available(iOS 15.0, *) {
 			snapshot.reconfigureItems(items)

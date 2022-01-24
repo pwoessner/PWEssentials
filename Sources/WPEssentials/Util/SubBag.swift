@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 
-typealias SubBag = Set<AnyCancellable>
+public typealias SubBag = Set<AnyCancellable>
 
-extension SubBag {
+public extension SubBag {
 	mutating func dispose() {
 		forEach { $0.cancel() }
 		removeAll()
