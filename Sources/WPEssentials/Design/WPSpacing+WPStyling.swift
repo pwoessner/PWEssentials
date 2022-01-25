@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum WPSpacing {
+enum PWSpacing {
     static var minor: CGFloat = 8
     static var small: CGFloat = 12
     static var medium: CGFloat = 16
@@ -17,7 +17,7 @@ enum WPSpacing {
     static var huge: CGFloat = 48
 }
 
-enum WPStyling {
+enum PWStyling {
 	static var minCornerRadius: CGFloat = 5
 	static var cornerRadius: CGFloat = 12
 }

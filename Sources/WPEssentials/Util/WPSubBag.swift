@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 
-public typealias WPSubBag = Set<AnyCancellable>
+public typealias PWSubBag = Set<AnyCancellable>
 
-public extension WPSubBag {
+public extension PWSubBag {
 	mutating func dispose() {
 		forEach { $0.cancel() }
 		removeAll()

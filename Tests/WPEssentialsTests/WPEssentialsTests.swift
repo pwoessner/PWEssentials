@@ -1,4 +1,4 @@
 import XCTest
-@testable import WPEssentials
+@testable import PWEssentials
 
-final class WPEssentialsTests: XCTestCase {}
+final class PWEssentialsTests: XCTestCase {}

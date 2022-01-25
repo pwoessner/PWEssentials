@@ -7,14 +7,14 @@ A struct for accessing generic password keychain items.
 
 import Foundation
 
-enum WPKeychainError: Error {
+enum PWKeychainError: Error {
 	case noPassword
 	case unexpectedPasswordData
 	case unexpectedItemData
 	case unhandledError
 }
 
-struct WPKeychainItem {
+struct PWKeychainItem {
 
     // MARK: Properties
     let service: String
@@ -38,7 +38,7 @@ struct WPKeychainItem {
          Build a query to find the item that matches the service, account and
          access group.
          */
-        var query = WPKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
+        var query = PWKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
         query[kSecMatchLimit as String] = kSecMatchLimitOne
         query[kSecReturnAttributes as String] = kCFBooleanTrue
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -50,15 +50,15 @@ struct WPKeychainItem {
         }
 
         // Check the return status and throw an error if appropriate.
-        guard status != errSecItemNotFound else { throw WPKeychainError.noPassword }
-        guard status == noErr else { throw WPKeychainError.unhandledError }
+        guard status != errSecItemNotFound else { throw PWKeychainError.noPassword }
+        guard status == noErr else { throw PWKeychainError.unhandledError }
 
         // Parse the password string from the query result.
         guard let existingItem = queryResult as? [String: AnyObject],
             let passwordData = existingItem[kSecValueData as String] as? Data,
             let password = String(data: passwordData, encoding: String.Encoding.utf8)
             else {
-                throw WPKeychainError.unexpectedPasswordData
+                throw PWKeychainError.unexpectedPasswordData
         }
 
         return password
@@ -67,7 +67,7 @@ struct WPKeychainItem {
     func saveItem(_ password: String) throws {
         // Encode the password into an Data object.
         guard let encodedPassword = password.data(using: String.Encoding.utf8) else {
-            throw WPKeychainError.noPassword
+            throw PWKeychainError.noPassword
         }
 
         do {
@@ -78,34 +78,34 @@ struct WPKeychainItem {
             var attributesToUpdate = [String: AnyObject]()
             attributesToUpdate[kSecValueData as String] = encodedPassword as AnyObject?
 
-            let query = WPKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
+            let query = PWKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
             let status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
 
             // Throw an error if an unexpected status was returned.
-            guard status == noErr else { throw WPKeychainError.unhandledError }
-        } catch WPKeychainError.noPassword {
+            guard status == noErr else { throw PWKeychainError.unhandledError }
+        } catch PWKeychainError.noPassword {
             /*
              No password was found in the keychain. Create a dictionary to save
              as a new keychain item.
              */
-            var newItem = WPKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
+            var newItem = PWKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
             newItem[kSecValueData as String] = encodedPassword as AnyObject?
 
             // Add a the new item to the keychain.
             let status = SecItemAdd(newItem as CFDictionary, nil)
 
             // Throw an error if an unexpected status was returned.
-            guard status == noErr else { throw WPKeychainError.unhandledError }
+            guard status == noErr else { throw PWKeychainError.unhandledError }
         }
     }
 
     func deleteItem() throws {
         // Delete the existing item from the keychain.
-        let query = WPKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
+        let query = PWKeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
         let status = SecItemDelete(query as CFDictionary)
 
         // Throw an error if an unexpected status was returned.
-        guard status == noErr || status == errSecItemNotFound else { throw WPKeychainError.unhandledError }
+        guard status == noErr || status == errSecItemNotFound else { throw PWKeychainError.unhandledError }
     }
 
     // MARK: Convenience

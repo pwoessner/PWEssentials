@@ -10,40 +10,40 @@ import UIKit
 extension UIColor {
 	// MARK: App Colors
 	static var appPrimary: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.primary) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.primary) ?? .systemGreen
 	}
 
 	static var appSecondary: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.secondary) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.secondary) ?? .systemGreen
 	}
 
 	static var appTertiary: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.tertiary) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.tertiary) ?? .systemGreen
 	}
 
 	static var appQuarternary: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.quarternary) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.quarternary) ?? .systemGreen
 	}
 
 	// MARK: Background Colors
 	static var appBackground: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.background) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.background) ?? .systemGreen
 	}
 
 	static var appTableBackground: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.tableBackground) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.tableBackground) ?? .systemGreen
 	}
 
 	static var appCellBackground: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.cellBackground) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.cellBackground) ?? .systemGreen
 	}
 
 	// MARK: Tint Colors
 	static var appPrimaryTint: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.primaryTint) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.primaryTint) ?? .systemGreen
 	}
 
 	static var appSecondaryTint: UIColor {
-		UIColor(named: WPThemeManager.shared.currentTheme.secondaryTint) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.secondaryTint) ?? .systemGreen
 	}
 }
