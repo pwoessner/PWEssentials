@@ -16,7 +16,7 @@ public struct AlertButton {
 	let style: UIAlertAction.Style
 }
 
-public class Alert {
+public class WPAlert {
 	let title: String
 	let message: String
 	let style = UIAlertController.Style.alert

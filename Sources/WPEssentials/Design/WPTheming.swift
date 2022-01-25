@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Theme {
+public protocol WPTheme {
 	var primary: String { get }
 	var secondary: String { get }
 	var tertiary: String { get }
@@ -21,21 +21,21 @@ public protocol Theme {
 	var secondaryTint: String { get }
 }
 
-open class ThemeManager {
-	public static var shared = ThemeManager()
+open class WPThemeManager {
+	public static var shared = WPThemeManager()
 
-	open private(set) var currentTheme: Theme
+	open private(set) var currentTheme: WPTheme
 
 	private init() {
-		self.currentTheme = DefaultTheme()
+		self.currentTheme = WPDefaultTheme()
 	}
 
-	func set(theme: Theme) {
+	func set(theme: WPTheme) {
 		self.currentTheme = theme
 	}
 }
 
-struct DefaultTheme: Theme {
+struct WPDefaultTheme: WPTheme {
 	private(set) var primary: String = "Primary"
 	private(set) var secondary: String = "Secondary"
 	private(set) var tertiary: String = "Tertiary"

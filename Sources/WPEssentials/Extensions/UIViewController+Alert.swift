@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public extension UIViewController {
-	func presentAlert(_ alert: Alert) {
+	func presentAlert(_ alert: WPAlert) {
 		let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)
 
 		if let leadingButton = alert.leadingButton {
