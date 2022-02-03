@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
 	// MARK: App Colors
 	static var appPrimary: UIColor {
 		UIColor(named: PWThemeManager.shared.currentTheme.primary) ?? .systemGreen

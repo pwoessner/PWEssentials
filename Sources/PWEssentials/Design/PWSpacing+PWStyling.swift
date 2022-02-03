@@ -10,14 +10,19 @@ import Foundation
 import UIKit
 
 public enum PWSpacing {
-    public static var minor: CGFloat = 8
-	public static var small: CGFloat = 12
-	public static var medium: CGFloat = 16
-	public static var large: CGFloat = 24
-	public static var huge: CGFloat = 48
+	public static let micro: CGFloat = 2
+    public static let minor: CGFloat = 8
+	public static let small: CGFloat = 12
+	public static let medium: CGFloat = 16
+	public static let large: CGFloat = 24
+	public static let huge: CGFloat = 48
+}
+
+public enum PWSize {
+	public static let standard: CGFloat = 80
 }
 
 public enum PWStyling {
-	public static var minCornerRadius: CGFloat = 5
-	public static var cornerRadius: CGFloat = 12
+	public static let minCornerRadius: CGFloat = 5
+	public static let cornerRadius: CGFloat = 12
 }
