@@ -9,16 +9,17 @@ import Foundation
 import UIKit
 
 open class PWCollectionViewController<S: Hashable, I: Hashable>: UIViewController {
-	public typealias Item = I
+	public typealias ItemIdentifier = I
 	public typealias Section = S
-	public typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
-	public typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item>
-	public typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+	public typealias DataSource = UICollectionViewDiffableDataSource<Section, ItemIdentifier>
+	public typealias ListCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, ItemIdentifier>
+	public typealias CellRegistration = UICollectionView.CellRegistration
+	public typealias Snapshot = NSDiffableDataSourceSnapshot<Section, ItemIdentifier>
 
 	open var dataSource: DataSource!
 	open var collectionView: UICollectionView!
 
-	open func reconfigureItems(_ items: [Item]) {
+	open func reconfigureItems(_ items: [ItemIdentifier]) {
 		var snapshot = self.dataSource.snapshot()
 		if #available(iOS 15.0, *) {
 			snapshot.reconfigureItems(items)
