@@ -28,4 +28,28 @@ open class PWCollectionViewController<S: Hashable, I: Hashable>: UIViewControlle
 		}
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
+
+	open func setupKeyboardNotifications() {
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+	}
+
+	@objc func keyboardWillShow(notification: NSNotification) {
+		if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+			collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+		}
+	}
+
+	@objc func keyboardWillHide(notification: NSNotification) {
+		UIView.animate(withDuration: 0.2, animations: { [weak self] in
+			// For some reason adding inset in keyboardWillShow is animated by itself but removing is not, that's why we have to use animateWithDuration here
+			self?.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		})
+	}
+
+	open func invalidateLayout(at indexPaths: [IndexPath]) {
+		let invalidationContext = UICollectionViewLayoutInvalidationContext()
+		invalidationContext.invalidateItems(at: indexPaths)
+		collectionView.collectionViewLayout.invalidateLayout(with: invalidationContext)
+	}
 }
