@@ -15,7 +15,7 @@ public struct AlertButton {
 	let action: ButtonAction?
 	let style: UIAlertAction.Style
 
-	init(title: String, action: ButtonAction? = nil, style: UIAlertAction.Style = .default) {
+	public init(title: String, action: ButtonAction? = nil, style: UIAlertAction.Style = .default) {
 		self.title = title
 		self.action = action
 		self.style = style
