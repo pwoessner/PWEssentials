@@ -27,23 +27,27 @@ public extension UIColor {
 
 	// MARK: Background Colors
 	static var appBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.background) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.background) ?? .systemBackground
 	}
 
 	static var appTableBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.tableBackground) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.tableBackground) ?? .systemGroupedBackground
 	}
 
 	static var appCellBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.cellBackground) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.cellBackground) ?? .secondarySystemGroupedBackground
 	}
 
 	// MARK: Tint Colors
 	static var appPrimaryTint: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.primaryTint) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.primaryTint) ?? .label
 	}
 
 	static var appSecondaryTint: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.secondaryTint) ?? .systemGreen
+		UIColor(named: PWThemeManager.shared.currentTheme.secondaryTint) ?? .secondaryLabel
+	}
+
+	static var appTertiaryTint: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.tertiaryTint) ?? .tertiaryLabel
 	}
 }

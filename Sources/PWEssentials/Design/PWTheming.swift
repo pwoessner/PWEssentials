@@ -19,6 +19,7 @@ public protocol PWTheme {
 
 	var primaryTint: String { get }
 	var secondaryTint: String { get }
+	var tertiaryTint: String { get }
 }
 
 open class PWThemeManager {
@@ -45,6 +46,7 @@ struct PWDefaultTheme: PWTheme {
 	private(set) var cellBackground: String = "CellBackground"
 	private(set) var primaryTint: String = "PrimaryTint"
 	private(set) var secondaryTint: String = "SecondaryTint"
+	private(set) var tertiaryTint: String = "TertiaryTint"
 
 	init () {}
 }
