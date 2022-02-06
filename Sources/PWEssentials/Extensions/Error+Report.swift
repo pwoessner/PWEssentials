@@ -15,7 +15,7 @@ public extension Error {
 		errorLogger.error("\(String(describing: caller)): [\(self)] \(self.localizedDescription)")
 	}
 
-	func getAlert(title: String, leadingButton: AlertButton? = nil, trailingButton: AlertButton? = nil) -> PWAlert {
-		return PWAlert(error: self, errorTitle: title, leadingButton: leadingButton, trailingButton: trailingButton)
+	func getAlert(title: String, message: String? = nil, leadingButton: PWAlertButton? = nil, trailingButton: PWAlertButton? = nil) -> PWAlert {
+		return PWAlert(error: self, errorTitle: title, errorMessage: message, leadingButton: leadingButton, trailingButton: trailingButton)
 	}
 }

@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "PWEssentials",
+	defaultLocalization: "en",
 	platforms: [
 	   .iOS(.v14),
 	],

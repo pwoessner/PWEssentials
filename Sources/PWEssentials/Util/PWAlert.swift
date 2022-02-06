@@ -10,7 +10,7 @@ import UIKit
 
 public typealias ButtonAction = (() -> Void)
 
-public struct AlertButton {
+public struct PWAlertButton {
 	let title: String
 	let action: ButtonAction?
 	let style: UIAlertAction.Style
@@ -20,25 +20,29 @@ public struct AlertButton {
 		self.action = action
 		self.style = style
 	}
+
+	public static var generalOkButton: PWAlertButton {
+		PWAlertButton(title: PWEssentialsStrings.General.ok)
+	}
 }
 
 public class PWAlert {
 	let title: String
 	let message: String
 	let style = UIAlertController.Style.alert
-	let leadingButton: AlertButton?
-	let trailingButton: AlertButton?
+	let leadingButton: PWAlertButton?
+	let trailingButton: PWAlertButton?
 
-	init(title: String, message: String, leadingButton: AlertButton? = nil, trailingButton: AlertButton? = nil) {
+	init(title: String, message: String, leadingButton: PWAlertButton? = nil, trailingButton: PWAlertButton? = nil) {
 		self.title = title
 		self.message = message
 		self.leadingButton = leadingButton
 		self.trailingButton = trailingButton
 	}
 
-	init(error: Error, errorTitle: String, leadingButton: AlertButton? = nil, trailingButton: AlertButton? = nil) {
+	init(error: Error, errorTitle: String, errorMessage: String? = nil, leadingButton: PWAlertButton? = nil, trailingButton: PWAlertButton? = nil) {
 		self.title = errorTitle
-		self.message = error.localizedDescription
+		self.message = errorMessage ?? error.localizedDescription
 		self.leadingButton = leadingButton
 		self.trailingButton = trailingButton
 	}

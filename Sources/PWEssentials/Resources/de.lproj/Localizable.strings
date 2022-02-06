@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Foodplan
+
+  Created by Philipp Woessner on 08.01.22.
+  
+*/
+
+// General
+"general_ok" = "Ok";
+"cancel" = "Abbrechen";
