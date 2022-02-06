@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 open class PWCollectionSection<SectionType> {
 	open var type: SectionType
-	open var itemIdentifiers: [UUID]
+	@Published open var itemIdentifiers: [UUID]
 
 	public init(type: SectionType, itemIdentifiers: [UUID] = []) {
 		self.type = type
