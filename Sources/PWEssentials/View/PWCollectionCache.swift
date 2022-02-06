@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class CollectionCache<SectionType, DataType: Identifiable & Hashable> {
+open class PWCollectionCache<SectionType, DataType: Identifiable & Hashable> {
 	open var type: SectionType
 	public private(set) var data: [DataType.ID: DataType]
 

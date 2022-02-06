@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class CollectionSection<SectionType> {
+open class PWCollectionSection<SectionType> {
 	open var type: SectionType
 	open var itemIdentifiers: [UUID]
 
