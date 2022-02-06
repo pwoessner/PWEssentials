@@ -7,11 +7,11 @@
 
 import Foundation
 
-class CollectionSection<SectionType> {
-	var type: SectionType
-	var itemIdentifiers: [UUID]
+open class CollectionSection<SectionType> {
+	open var type: SectionType
+	open var itemIdentifiers: [UUID]
 
-	init(type: SectionType, itemIdentifiers: [UUID] = []) {
+	public init(type: SectionType, itemIdentifiers: [UUID] = []) {
 		self.type = type
 		self.itemIdentifiers = itemIdentifiers
 	}

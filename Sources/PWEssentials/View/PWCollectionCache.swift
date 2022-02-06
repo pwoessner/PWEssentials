@@ -7,16 +7,16 @@
 
 import Foundation
 
-class CollectionCache<SectionType, DataType: Identifiable & Hashable> {
-	var type: SectionType
-	private(set) var data: [DataType.ID: DataType]
+open class CollectionCache<SectionType, DataType: Identifiable & Hashable> {
+	open var type: SectionType
+	public private(set) var data: [DataType.ID: DataType]
 
-	init(type: SectionType, data: [DataType.ID: DataType] = [:]) {
+	public init(type: SectionType, data: [DataType.ID: DataType] = [:]) {
 		self.type = type
 		self.data = data
 	}
 
-	func updateData(_ dataUpdate: [DataType]) -> [DataType.ID] {
+	open func updateData(_ dataUpdate: [DataType]) -> [DataType.ID] {
 		var changedIds: [DataType.ID] = []
 		for newData in dataUpdate {
 			if let oldData = data[newData.id], oldData != newData {
@@ -27,7 +27,7 @@ class CollectionCache<SectionType, DataType: Identifiable & Hashable> {
 		return changedIds
 	}
 
-	func setData(_ dataUpdate: [DataType]) {
+	open func setData(_ dataUpdate: [DataType]) {
 		data.removeAll()
 		for newData in dataUpdate {
 			self.data[newData.id] = newData

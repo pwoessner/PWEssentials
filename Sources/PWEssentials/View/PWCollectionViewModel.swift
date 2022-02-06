@@ -7,23 +7,23 @@
 
 import Foundation
 
-class CollectionViewModel<SectionType> {
-	@Published var reconfigureItems: [UUID] = []
+open class CollectionViewModel<SectionType> {
+	@Published public var reconfigureItems: [UUID] = []
 
-	let sections: [CollectionSection<SectionType>]
+	public let sections: [CollectionSection<SectionType>]
 
-	init(sections: [CollectionSection<SectionType>]) {
+	public init(sections: [CollectionSection<SectionType>]) {
 		self.sections = sections
 	}
 
-	func getSection(for itemIdentifier: UUID) -> CollectionSection<SectionType>? {
+	open func getSection(for itemIdentifier: UUID) -> CollectionSection<SectionType>? {
 		for section in sections where section.itemIdentifiers.contains(itemIdentifier) {
 			return section
 		}
 		return nil
 	}
 
-	func finishReconfiguration() {
+	open func finishReconfiguration() {
 		reconfigureItems.removeAll()
 	}
 }
