@@ -8,7 +8,7 @@
 import Foundation
 
 open class PWCollectionCache<DataType: Identifiable & Hashable> {
-	public private(set) var data: [DataType.ID: DataType]
+	public var data: [DataType.ID: DataType]
 
 	public init(data: [DataType.ID: DataType] = [:]) {
 		self.data = data
