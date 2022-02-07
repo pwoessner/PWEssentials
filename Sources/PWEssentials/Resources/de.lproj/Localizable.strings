@@ -9,3 +9,7 @@
 // General
 "general_ok" = "Ok";
 "cancel" = "Abbrechen";
+
+// UnitItem
+"pc" = "pc";
+"pc_long" = "Stück";

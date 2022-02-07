@@ -21,4 +21,10 @@ public class PWFormatter {
 
 		return formatter.string(from: interval) ?? "NaN"
 	}
+
+	public static func formatUnitSymbol(for unit: Unit, style: Formatter.UnitStyle) -> String {
+		let formatter = MeasurementFormatter()
+		formatter.unitStyle = style
+		return formatter.string(fromCustom: unit)
+	}
 }
