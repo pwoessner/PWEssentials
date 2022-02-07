@@ -7,12 +7,10 @@
 
 import Foundation
 
-open class PWCollectionCache<SectionType, DataType: Identifiable & Hashable> {
-	open var type: SectionType
+open class PWCollectionCache<DataType: Identifiable & Hashable> {
 	public private(set) var data: [DataType.ID: DataType]
 
-	public init(type: SectionType, data: [DataType.ID: DataType] = [:]) {
-		self.type = type
+	public init(data: [DataType.ID: DataType] = [:]) {
 		self.data = data
 	}
 
