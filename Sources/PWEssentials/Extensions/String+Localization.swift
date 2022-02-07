@@ -16,3 +16,9 @@ public extension String {
 		return String(format: NSLocalizedString(self, comment: self), param)
 	}
 }
+
+public extension String {
+	var moduleLocalized: String {
+		return NSLocalizedString(self, bundle: Bundle.module, comment: self)
+	}
+}

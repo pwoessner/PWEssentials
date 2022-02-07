@@ -23,7 +23,7 @@ open class PWCollectionViewModel<SectionType> {
 		return nil
 	}
 
-	open func finishReconfiguration() {
+	open func prepareReconfiguration() {
 		reconfigureItems.removeAll()
 	}
 }

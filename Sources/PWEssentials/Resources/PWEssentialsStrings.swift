@@ -9,7 +9,7 @@ import Foundation
 
 struct PWEssentialsStrings {
 	struct General {
-		static let ok = "general_ok".localized
-		static let cancel = "cancel".localized
+		static let ok = "general_ok".moduleLocalized
+		static let cancel = "cancel".moduleLocalized
 	}
 }

@@ -29,6 +29,12 @@ open class PWCollectionViewController<S: Hashable, I: Hashable>: UIViewControlle
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 
+	open func deleteItems(_ items: [ItemIdentifier]) {
+		var snapshot = dataSource.snapshot()
+		snapshot.deleteItems(items)
+		dataSource.apply(snapshot)
+	}
+
 	open func setupKeyboardNotifications() {
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

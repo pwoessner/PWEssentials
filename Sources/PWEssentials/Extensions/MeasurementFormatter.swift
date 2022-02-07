@@ -10,12 +10,12 @@ import Foundation
 extension MeasurementFormatter {
 	func string(fromCustom unit: Unit) -> String {
 		if unit is UnitItem {
-			switch self.unitStyle {
-			case .short:
-				return unit.symbol.localized
-			default:
-				return "\(unit.symbol)_long".localized
-			}
+				switch self.unitStyle {
+				case .short:
+					return unit.symbol.moduleLocalized
+				default:
+					return "\(unit.symbol)_long".moduleLocalized
+				}
 		}
 
 		return string(from: unit)
