@@ -31,4 +31,8 @@ open class PWCollectionCache<DataType: Identifiable & Hashable> {
 			self.data[newData.id] = newData
 		}
 	}
+
+	open func removeAllData() {
+		data.removeAll()
+	}
 }
