@@ -27,3 +27,11 @@ open class PWCollectionViewModel<SectionType> {
 		reconfigureItems.removeAll()
 	}
 }
+
+open class PWViewModel<SectionType, CellType: Identifiable & Hashable> {
+	public let sections: [PWViewSection<SectionType, CellType>]
+
+	public init(sections: [PWViewSection<SectionType, CellType>]) {
+		self.sections = sections
+	}
+}
