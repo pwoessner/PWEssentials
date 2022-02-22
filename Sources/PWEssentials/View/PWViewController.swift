@@ -21,14 +21,18 @@ open class PWViewController: UIViewController {
 	// MARK: - Loading Indicator
 	public func setupLoading() {
 		blurEffectView.isHidden = true
-		blurEffectView.frame = view.bounds
-		blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		blurEffectView.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(blurEffectView)
+		NSLayoutConstraint.activate([
+			blurEffectView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			blurEffectView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+			blurEffectView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+		])
 
 		activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 		activityIndicator.hidesWhenStopped = true
 		view.addSubview(activityIndicator)
-
 		NSLayoutConstraint.activate([
 			activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
