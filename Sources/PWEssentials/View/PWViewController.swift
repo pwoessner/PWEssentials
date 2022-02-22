@@ -14,12 +14,26 @@ open class PWViewController: UIViewController {
 	public var currentError = PassthroughSubject<Error, Never>()
 
 	private var subs = PWSubBag()
+	private var loadingCount = 0
 	private let activityIndicator = UIActivityIndicatorView(style: .large)
 	private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
 
+	private var loadingOnGoing: Bool {
+		loadingCount > 0
+	}
+
+	public init() {
+		super.init(nibName: nil, bundle: nil)
+
+		observeErrors()
+	}
+
+	public required init?(coder: NSCoder) {
+		fatalError("required init not implemented")
+	}
 
 	// MARK: - Loading Indicator
-	public func setupLoading() {
+	public func setupLoadingIndicator() {
 		blurEffectView.isHidden = true
 		blurEffectView.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(blurEffectView)
@@ -47,13 +61,15 @@ open class PWViewController: UIViewController {
 			.sink { [weak self] showLoading in
 				guard let self = self else { return }
 
-				self.view.subviews.forEach { $0.isUserInteractionEnabled = !showLoading }
+				self.loadingCount = showLoading ? self.loadingCount + 1 : self.loadingCount - 1
+
+				self.view.subviews.forEach { $0.isUserInteractionEnabled = !self.loadingOnGoing }
 
 				self.view.bringSubviewToFront(self.blurEffectView)
-				self.blurEffectView.isHidden = !showLoading
+				self.blurEffectView.isHidden = !self.loadingOnGoing
 
 				self.view.bringSubviewToFront(self.activityIndicator)
-				showLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+				self.loadingOnGoing ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
 			}
 			.store(in: &subs)
 	}
@@ -64,7 +80,7 @@ open class PWViewController: UIViewController {
 		presentAlert(alert)
 	}
 
-	public func observeErrors() {
+	private func observeErrors() {
 		currentError
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] error in
