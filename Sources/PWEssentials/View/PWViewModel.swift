@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 open class PWCollectionViewModel<SectionType> {
+	public var isLoading = PassthroughSubject<Bool, Never>()
+	public var currentError = PassthroughSubject<Error, Never>()
+
 	@Published public var reconfigureItems: [UUID] = []
 
 	public let sections: [PWCollectionSection<SectionType>]
@@ -29,6 +33,9 @@ open class PWCollectionViewModel<SectionType> {
 }
 
 open class PWViewModel<SectionType, CellType: Identifiable & Hashable> {
+	public var isLoading = PassthroughSubject<Bool, Never>()
+	public var currentError = PassthroughSubject<Error, Never>()
+	
 	public let sections: [PWViewSection<SectionType, CellType>]
 
 	public init(sections: [PWViewSection<SectionType, CellType>]) {

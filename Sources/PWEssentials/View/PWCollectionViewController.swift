@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-open class PWCollectionViewController<S: Hashable, I: Hashable>: UIViewController {
+open class PWCollectionViewController<S: Hashable, I: Hashable>: PWViewController {
 	public typealias ItemIdentifier = I
 	public typealias Section = S
 	public typealias DataSource = UICollectionViewDiffableDataSource<Section, ItemIdentifier>

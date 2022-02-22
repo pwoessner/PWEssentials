@@ -9,6 +9,8 @@
 // General
 "general_ok" = "Ok";
 "cancel" = "Abbrechen";
+"error_title" = "Unbekannter Fehler";
+"error_message" = "Es ist ein Fehler aufgetreten. Versuche es später erneut.";
 
 // UnitItem
 "pc" = "pc";

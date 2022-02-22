@@ -9,6 +9,8 @@
 // General
 "general_ok" = "Ok";
 "cancel" = "Cancel";
+"error_title" = "Unexpected Error";
+"error_message" = "Something unexpected went wrong. Please try it again later.";
 
 // UnitItem
 "pc" = "pc";
