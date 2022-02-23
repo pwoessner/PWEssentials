@@ -10,66 +10,45 @@ import UIKit
 import Combine
 
 open class PWViewController: UIViewController {
-	public var isLoading = PassthroughSubject<Bool, Never>()
-	public var currentError = PassthroughSubject<Error, Never>()
+	public var isLoading: PassthroughSubject<Bool, Never>? {
+		didSet {
+			observeIsLoading()
+		}
+	}
+
+	public var currentError: PassthroughSubject<Error, Never>? {
+		didSet {
+			observeErrors()
+		}
+	}
 
 	private var subs = PWSubBag()
-	private var loadingCount = 0
-	private let activityIndicator = UIActivityIndicatorView(style: .large)
-	private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
 
-	private var loadingOnGoing: Bool {
-		loadingCount > 0
-	}
+	private var loadingIndicatorController: PWLoadingIndicatorController?
+	private var effectViewController: PWEffectViewController?
+
 
 	public init() {
 		super.init(nibName: nil, bundle: nil)
-
-		observeErrors()
 	}
 
 	public required init?(coder: NSCoder) {
 		fatalError("required init not implemented")
 	}
 
-	// MARK: - Loading Indicator
-	public func setupLoadingIndicator() {
-		blurEffectView.isHidden = true
-		blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(blurEffectView)
-		NSLayoutConstraint.activate([
-			blurEffectView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-			blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			blurEffectView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-			blurEffectView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-		])
-
-		activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-		activityIndicator.hidesWhenStopped = true
-		view.addSubview(activityIndicator)
-		NSLayoutConstraint.activate([
-			activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-		])
-
-		observeIsLoading()
+	public func setupBlurAndLoading() {
+		loadingIndicatorController = PWLoadingIndicatorController(on: view)
+		effectViewController = PWEffectViewController(on: view)
 	}
 
 	private func observeIsLoading() {
-		isLoading
+		isLoading?
 			.receive(on: DispatchQueue.main)
-			.sink { [weak self] showLoading in
+			.sink { [weak self] isLoading in
 				guard let self = self else { return }
 
-				self.loadingCount = showLoading ? self.loadingCount + 1 : self.loadingCount - 1
-
-				self.view.subviews.forEach { $0.isUserInteractionEnabled = !self.loadingOnGoing }
-
-				self.view.bringSubviewToFront(self.blurEffectView)
-				self.blurEffectView.isHidden = !self.loadingOnGoing
-
-				self.view.bringSubviewToFront(self.activityIndicator)
-				self.loadingOnGoing ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+				self.effectViewController?.showBlurView(self.loadingIndicatorController?.loadingOnGoing ?? false)
+				self.loadingIndicatorController?.evaluateLoading(isLoading: isLoading)
 			}
 			.store(in: &subs)
 	}
@@ -81,11 +60,25 @@ open class PWViewController: UIViewController {
 	}
 
 	private func observeErrors() {
-		currentError
+		currentError?
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] error in
 				self?.handle(error)
 			}
 			.store(in: &subs)
+	}
+}
+
+// MARK: - Loading Indicator
+extension PWViewController: PWLoadingIndicatorPresentable {
+	public func evaluateLoading(isLoading: Bool) {
+		loadingIndicatorController?.evaluateLoading(isLoading: isLoading)
+	}
+}
+
+// MARK: - Effect View
+extension PWViewController: PWEffectViewPresentable {
+	public func showBlurView(_ show: Bool, bringToFront: Bool = true) {
+		effectViewController?.showBlurView(show, bringToFront: bringToFront)
 	}
 }

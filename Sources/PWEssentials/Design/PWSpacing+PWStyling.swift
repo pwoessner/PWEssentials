@@ -25,4 +25,11 @@ public enum PWSize {
 public enum PWStyling {
 	public static let minCornerRadius: CGFloat = 5
 	public static let cornerRadius: CGFloat = 12
+	public static let maxCornerRadius: CGFloat = 24
+}
+
+public enum PWAnimationDuration {
+	public static let short: TimeInterval = 0.2
+	public static let medium: TimeInterval = 0.4
+	public static let long: TimeInterval = 0.6
 }
