@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 open class PWCollectionViewModel<SectionType> {
-	public var isLoading = PassthroughSubject<Bool, Never>()
-	public var currentError = PassthroughSubject<Error, Never>()
+	public let isLoading = PassthroughSubject<Bool, Never>()
+	public let currentError = PassthroughSubject<Error, Never>()
 
 	@Published public var reconfigureItems: [UUID] = []
 
