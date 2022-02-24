@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 open class PWViewController: UIViewController {
-	public var isLoading: PassthroughSubject<Bool, Never>? {
+	public var loadingState: PassthroughSubject<PWLoadingState, Never>? {
 		didSet {
 			observeIsLoading()
 		}
@@ -42,13 +42,13 @@ open class PWViewController: UIViewController {
 	}
 
 	private func observeIsLoading() {
-		isLoading?
+		loadingState?
 			.receive(on: DispatchQueue.main)
-			.sink { [weak self] isLoading in
+			.sink { [weak self] loadingState in
 				guard let self = self else { return }
 
 				self.effectViewController?.showBlurView(self.loadingIndicatorController?.loadingOnGoing ?? false)
-				self.loadingIndicatorController?.evaluateLoading(isLoading: isLoading)
+				self.loadingIndicatorController?.addToLoadingQueue(loadingState)
 			}
 			.store(in: &subs)
 	}
@@ -71,8 +71,8 @@ open class PWViewController: UIViewController {
 
 // MARK: - Loading Indicator
 extension PWViewController: PWLoadingIndicatorPresentable {
-	public func evaluateLoading(isLoading: Bool) {
-		loadingIndicatorController?.evaluateLoading(isLoading: isLoading)
+	public func addToLoadingQueue(_ loadingState: PWLoadingState) {
+		loadingIndicatorController?.addToLoadingQueue(loadingState)
 	}
 }
 

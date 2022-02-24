@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public protocol PWLoadingIndicatorPresentable {
-	func evaluateLoading(isLoading: Bool)
+	func addToLoadingQueue(_ loadingState: PWLoadingState)
 }
 
 public class PWLoadingIndicatorController {
@@ -17,9 +17,9 @@ public class PWLoadingIndicatorController {
 	private weak var view: UIView?
 
 	private let activityIndicator = UIActivityIndicatorView(style: .large)
-	private var loadingCount = 1
+	private var loadingCount = 0
 
-	var loadingOnGoing: Bool {
+	public var loadingOnGoing: Bool {
 		loadingCount > 0
 	}
 
@@ -37,7 +37,6 @@ public class PWLoadingIndicatorController {
 			return
 		}
 
-
 		view.addSubview(activityIndicator)
 		NSLayoutConstraint.activate([
 			activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -45,8 +44,8 @@ public class PWLoadingIndicatorController {
 		])
 	}
 
-	public func evaluateLoading(isLoading: Bool) {
-		loadingCount = isLoading ? loadingCount + 1 : loadingCount - 1
+	public func addToLoadingQueue(_ loadingState: PWLoadingState) {
+		loadingCount += loadingState.rawValue
 
 		guard let view = view else {
 			return
@@ -57,5 +56,9 @@ public class PWLoadingIndicatorController {
 		view.bringSubviewToFront(activityIndicator)
 		loadingOnGoing ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
 	}
+}
 
+public enum PWLoadingState: Int {
+	case started = 1
+	case finished = -1
 }
