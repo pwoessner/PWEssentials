@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 public protocol PWBottomPageViewControllerPresentable: AnyObject {
-	func addAndShowBottomPageViewController(on viewController: UIViewController, with pages: [UIViewController])
+	func addAndShowBottomPageViewController(on viewController: UIViewController,
+											with pages: [UIViewController],
+											closeAction: (() -> Void)?)
 	func removeAndHideBottomPageViewController()
 }
 
@@ -20,6 +22,7 @@ public class PWPageViewController: UIPageViewController {
 	}
 
 	private weak var pageDelegate: PWBottomPageViewControllerPresentable?
+	private var closeAction: (() -> Void)?
 
 	let cornerRadius: CGFloat
 
@@ -27,10 +30,14 @@ public class PWPageViewController: UIPageViewController {
 	private let pageControl = UIPageControl()
 	private let closeButton = UIButton(type: .close)
 
-	public init(pageDelegate: PWBottomPageViewControllerPresentable?, pages: [UIViewController], cornerRadius: CGFloat = PWStyling.maxCornerRadius) {
+	public init(pageDelegate: PWBottomPageViewControllerPresentable?,
+				pages: [UIViewController],
+				cornerRadius: CGFloat = PWStyling.maxCornerRadius,
+				closeAction: (() -> Void)?) {
 		self.pageDelegate = pageDelegate
 		self.pages = pages
 		self.cornerRadius = cornerRadius
+		self.closeAction = closeAction
 
 		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 	}
@@ -83,6 +90,7 @@ public class PWPageViewController: UIPageViewController {
 	}
 
 	@objc private func closePageViewController() {
+		closeAction?()
 		pageDelegate?.removeAndHideBottomPageViewController()
 	}
 }
