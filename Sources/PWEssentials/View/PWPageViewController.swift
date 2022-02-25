@@ -11,6 +11,7 @@ import UIKit
 public protocol PWBottomPageViewControllerPresentable: AnyObject {
 	func addAndShowBottomPageViewController(on viewController: UIViewController,
 											with pages: [UIViewController],
+											closeOnlyOnLastPage: Bool,
 											closeAction: (() -> Void)?)
 	func removeAndHideBottomPageViewController()
 }
@@ -21,22 +22,24 @@ public class PWPageViewController: UIPageViewController {
 		case after
 	}
 
-	private weak var pageDelegate: PWBottomPageViewControllerPresentable?
-	private var closeAction: (() -> Void)?
-
-	let cornerRadius: CGFloat
-
-	private var pages: [UIViewController]
-	private let pageControl = UIPageControl()
 	private let closeButton = UIButton(type: .close)
+	private let pageControl = UIPageControl()
+
+	private weak var pageDelegate: PWBottomPageViewControllerPresentable?
+	private var pages: [UIViewController]
+	private let cornerRadius: CGFloat
+	private var closeOnlyOnLastPage: Bool
+	private var closeAction: (() -> Void)?
 
 	public init(pageDelegate: PWBottomPageViewControllerPresentable?,
 				pages: [UIViewController],
 				cornerRadius: CGFloat = PWStyling.maxCornerRadius,
+				closeOnlyOnLastPage: Bool = false,
 				closeAction: (() -> Void)?) {
 		self.pageDelegate = pageDelegate
 		self.pages = pages
 		self.cornerRadius = cornerRadius
+		self.closeOnlyOnLastPage = closeOnlyOnLastPage
 		self.closeAction = closeAction
 
 		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -49,7 +52,7 @@ public class PWPageViewController: UIPageViewController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 
-		view.backgroundColor = .appPrimary
+		view.backgroundColor = .appBackground
 		view.layer.cornerRadius = PWStyling.maxCornerRadius
 
 		setupPages()
@@ -57,9 +60,12 @@ public class PWPageViewController: UIPageViewController {
 		setupCloseButton()
 
 		dataSource = self
+		delegate = self
 	}
 
 	private func setupCloseButton() {
+		closeButton.isHidden = closeOnlyOnLastPage
+
 		closeButton.addTarget(self, action: #selector(closePageViewController), for: .touchUpInside)
 
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -95,6 +101,20 @@ public class PWPageViewController: UIPageViewController {
 	}
 }
 
+extension PWPageViewController: UIPageViewControllerDelegate {
+	public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+		guard finished, let currentViewController = pageViewController.viewControllers?.first else { return }
+
+		let currentIndex = getIndexOf(current: currentViewController)
+
+		pageControl.currentPage = currentIndex
+
+		if closeOnlyOnLastPage {
+			closeButton.isHidden = currentIndex != (pages.endIndex - 1)
+		}
+	}
+}
+
 extension PWPageViewController: UIPageViewControllerDataSource {
 	public func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
 		getPageViewController(viewController, for: .before)
@@ -114,8 +134,6 @@ extension PWPageViewController: UIPageViewControllerDataSource {
 		case .after:
 			neededIndex = currentIndex + 1
 		}
-
-		pageControl.currentPage = neededIndex
 
 		return pages.indices.contains(neededIndex) ? pages[neededIndex] : nil
 	}
