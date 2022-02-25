@@ -29,7 +29,7 @@ public class PWPageViewController: UIPageViewController {
 	private var pages: [UIViewController]
 	private let cornerRadius: CGFloat
 	private var closeOnlyOnLastPage: Bool
-	private var closeAction: (() -> Void)?
+	public var closeAction: (() -> Void)?
 
 	public init(pageDelegate: PWBottomPageViewControllerPresentable?,
 				pages: [UIViewController],
