@@ -10,6 +10,7 @@ import UIKit
 
 public protocol PWLoadingIndicatorPresentable {
 	func addToLoadingQueue(_ loadingState: PWLoadingState)
+	func refreshLoadingIndicator()
 }
 
 public class PWLoadingIndicatorController {
@@ -46,7 +47,9 @@ public class PWLoadingIndicatorController {
 
 	public func addToLoadingQueue(_ loadingState: PWLoadingState) {
 		loadingCount += loadingState.rawValue
+	}
 
+	public func refreshLoadingIndicator() {
 		guard let view = view else {
 			return
 		}

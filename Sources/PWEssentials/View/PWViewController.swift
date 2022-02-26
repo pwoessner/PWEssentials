@@ -47,8 +47,10 @@ open class PWViewController: UIViewController {
 			.sink { [weak self] loadingState in
 				guard let self = self else { return }
 
-				self.effectViewController?.showBlurView(self.loadingIndicatorController?.loadingOnGoing ?? false)
 				self.loadingIndicatorController?.addToLoadingQueue(loadingState)
+				
+				self.effectViewController?.showBlurView(self.loadingIndicatorController?.loadingOnGoing ?? false)
+				self.loadingIndicatorController?.refreshLoadingIndicator()
 			}
 			.store(in: &subs)
 	}
@@ -73,6 +75,10 @@ open class PWViewController: UIViewController {
 extension PWViewController: PWLoadingIndicatorPresentable {
 	public func addToLoadingQueue(_ loadingState: PWLoadingState) {
 		loadingIndicatorController?.addToLoadingQueue(loadingState)
+	}
+
+	public func refreshLoadingIndicator() {
+		loadingIndicatorController?.refreshLoadingIndicator()
 	}
 }
 
