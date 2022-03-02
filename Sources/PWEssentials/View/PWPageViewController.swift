@@ -11,9 +11,30 @@ import UIKit
 public protocol PWBottomPageViewControllerPresentable: AnyObject {
 	func addAndShowBottomPageViewController(on viewController: UIViewController,
 											with pages: [UIViewController],
-											closeOnlyOnLastPage: Bool,
-											closeAction: (() -> Void)?)
+                                            configuration: PWPageViewControllerConfiguration)
 	func removeAndHideBottomPageViewController()
+}
+
+public struct PWPageViewControllerConfiguration {
+    let cornerRadius: CGFloat
+    let showPageControl: Bool
+    let showCloseButton: Bool
+    let showCloseButtonOnlyForLast: Bool
+    public var closeAction: (() -> Void)?
+
+    public static var onboardingConfiguration: PWPageViewControllerConfiguration {
+        return PWPageViewControllerConfiguration(cornerRadius: PWStyling.maxCornerRadius,
+                                                       showPageControl: true,
+                                                       showCloseButton: true,
+                                                       showCloseButtonOnlyForLast: true)
+    }
+
+    public static var errorConfiguration: PWPageViewControllerConfiguration {
+        return PWPageViewControllerConfiguration(cornerRadius: PWStyling.maxCornerRadius,
+                                                 showPageControl: false,
+                                                 showCloseButton: false,
+                                                 showCloseButtonOnlyForLast: false)
+    }
 }
 
 public class PWPageViewController: UIPageViewController {
@@ -27,20 +48,15 @@ public class PWPageViewController: UIPageViewController {
 
 	private weak var pageDelegate: PWBottomPageViewControllerPresentable?
 	private var pages: [UIViewController]
-	private let cornerRadius: CGFloat
-	private var closeOnlyOnLastPage: Bool
-	public var closeAction: (() -> Void)?
+
+    public let configuration: PWPageViewControllerConfiguration
 
 	public init(pageDelegate: PWBottomPageViewControllerPresentable?,
 				pages: [UIViewController],
-				cornerRadius: CGFloat = PWStyling.maxCornerRadius,
-				closeOnlyOnLastPage: Bool = false,
-				closeAction: (() -> Void)?) {
+                configuration: PWPageViewControllerConfiguration) {
 		self.pageDelegate = pageDelegate
 		self.pages = pages
-		self.cornerRadius = cornerRadius
-		self.closeOnlyOnLastPage = closeOnlyOnLastPage
-		self.closeAction = closeAction
+        self.configuration = configuration
 
 		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 	}
@@ -56,25 +72,17 @@ public class PWPageViewController: UIPageViewController {
 		view.layer.cornerRadius = PWStyling.maxCornerRadius
 
 		setupPages()
-		setupPageControl()
-		setupCloseButton()
+
+        if configuration.showPageControl {
+            setupPageControl()
+        }
+
+        if configuration.showCloseButton {
+            setupCloseButton()
+        }
 
 		dataSource = self
 		delegate = self
-	}
-
-	private func setupCloseButton() {
-		closeButton.isHidden = closeOnlyOnLastPage
-
-		closeButton.addTarget(self, action: #selector(closePageViewController), for: .touchUpInside)
-
-		closeButton.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(closeButton)
-
-		NSLayoutConstraint.activate([
-			closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: PWSpacing.medium),
-			closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -PWSpacing.medium)
-		])
 	}
 
 	private func setupPages() {
@@ -95,8 +103,21 @@ public class PWPageViewController: UIPageViewController {
 		])
 	}
 
+    private func setupCloseButton() {
+        closeButton.isHidden = configuration.showCloseButtonOnlyForLast
+
+        closeButton.addTarget(self, action: #selector(closePageViewController), for: .touchUpInside)
+
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(closeButton)
+
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: PWSpacing.medium),
+            closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -PWSpacing.medium)
+        ])
+    }
+
 	@objc private func closePageViewController() {
-		closeAction?()
 		pageDelegate?.removeAndHideBottomPageViewController()
 	}
 }
@@ -109,7 +130,7 @@ extension PWPageViewController: UIPageViewControllerDelegate {
 
 		pageControl.currentPage = currentIndex
 
-		if closeOnlyOnLastPage {
+        if configuration.showCloseButton, configuration.showCloseButtonOnlyForLast {
 			closeButton.isHidden = currentIndex != (pages.endIndex - 1)
 		}
 	}

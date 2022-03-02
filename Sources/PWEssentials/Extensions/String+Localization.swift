@@ -17,7 +17,7 @@ public extension String {
 	}
 }
 
-public extension String {
+extension String {
 	var moduleLocalized: String {
 		return NSLocalizedString(self, bundle: Bundle.module, comment: self)
 	}
