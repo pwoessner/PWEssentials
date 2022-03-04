@@ -7,12 +7,11 @@
 
 import Foundation
 import UIKit
+import Combine
 
-public protocol PWBottomPageViewControllerPresentable: AnyObject {
-	func addAndShowBottomPageViewController(on viewController: UIViewController,
-											with pages: [UIViewController],
-                                            configuration: PWPageViewControllerConfiguration)
-	func removeAndHideBottomPageViewController()
+public protocol PWPagePresentable: AnyObject {
+    func showPages(_ pageViewController: PWPageViewController)
+    func removePages(_ pageViewController: PWPageViewController)
 }
 
 public struct PWPageViewControllerConfiguration {
@@ -46,12 +45,16 @@ public class PWPageViewController: UIPageViewController {
 	private let closeButton = UIButton(type: .close)
 	private let pageControl = UIPageControl()
 
-	private weak var pageDelegate: PWBottomPageViewControllerPresentable?
+	private weak var pageDelegate: PWPagePresentable?
 	private var pages: [UIViewController]
+
+    private var subs = PWSubBag()
+    public var loadingState = PassthroughSubject<PWLoadingState, Never>()
+    private var loadingIndicatorController: PWLoadingIndicatorController?
 
     public let configuration: PWPageViewControllerConfiguration
 
-	public init(pageDelegate: PWBottomPageViewControllerPresentable?,
+	public init(pageDelegate: PWPagePresentable?,
 				pages: [UIViewController],
                 configuration: PWPageViewControllerConfiguration) {
 		self.pageDelegate = pageDelegate
@@ -80,6 +83,8 @@ public class PWPageViewController: UIPageViewController {
         if configuration.showCloseButton {
             setupCloseButton()
         }
+
+        setupLoadingController()
 
 		dataSource = self
 		delegate = self
@@ -117,8 +122,20 @@ public class PWPageViewController: UIPageViewController {
         ])
     }
 
+    private func setupLoadingController() {
+        loadingIndicatorController = PWLoadingIndicatorController(on: view)
+
+        loadingState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] loadingState in
+                self?.loadingIndicatorController?.addToLoadingQueue(loadingState)
+                self?.loadingIndicatorController?.refreshLoadingIndicator()
+            }
+            .store(in: &subs)
+    }
+
 	@objc private func closePageViewController() {
-		pageDelegate?.removeAndHideBottomPageViewController()
+		pageDelegate?.removePages(self)
 	}
 }
 

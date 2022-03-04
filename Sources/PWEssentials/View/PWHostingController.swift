@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public class PWHostingController<ContentView: View>: PWViewController {
+open class PWHostingController<ContentView: View>: PWViewController {
 
 	private let hostingController: UIHostingController<ContentView>
 

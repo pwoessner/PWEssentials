@@ -46,7 +46,8 @@ public class PWLoadingIndicatorController {
 	}
 
 	public func addToLoadingQueue(_ loadingState: PWLoadingState) {
-		loadingCount += loadingState.rawValue
+		let newCount = loadingCount + loadingState.rawValue
+        loadingCount = newCount >= .zero ? newCount : .zero
 	}
 
 	public func refreshLoadingIndicator() {
