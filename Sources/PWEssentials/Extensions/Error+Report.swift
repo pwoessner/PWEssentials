@@ -1,6 +1,6 @@
 //
 //  Error+Report.swift
-//  Foodplan
+//  PWEssentials
 //
 //  Created by Philipp Woessner on 08.01.22.
 //

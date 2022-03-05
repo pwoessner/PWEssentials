@@ -1,6 +1,6 @@
 //
 //  PWPageViewController.swift
-//  Foodplan
+//  PWEssentials
 //
 //  Created by Woessner, Philipp on 22.02.22.
 //
