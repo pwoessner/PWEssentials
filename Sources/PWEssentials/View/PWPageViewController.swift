@@ -71,7 +71,7 @@ public class PWPageViewController: UIPageViewController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 
-		view.backgroundColor = .appBackground
+		view.backgroundColor = .appPrimaryBackground
 		view.layer.cornerRadius = PWStyling.maxCornerRadius
 
 		setupPages()

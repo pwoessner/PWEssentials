@@ -7,21 +7,6 @@
 
 import Foundation
 
-public protocol PWTheme {
-	var primary: String { get }
-	var secondary: String { get }
-	var tertiary: String { get }
-	var quarternary: String { get }
-
-	var background: String { get }
-	var tableBackground: String { get }
-	var cellBackground: String { get }
-
-	var primaryTint: String { get }
-	var secondaryTint: String { get }
-	var tertiaryTint: String { get }
-}
-
 open class PWThemeManager {
 	public static var shared = PWThemeManager()
 
@@ -36,17 +21,47 @@ open class PWThemeManager {
 	}
 }
 
-struct PWDefaultTheme: PWTheme {
-	private(set) var primary: String = "Primary"
-	private(set) var secondary: String = "Secondary"
-	private(set) var tertiary: String = "Tertiary"
-	private(set) var quarternary: String = "Quarternary"
-	private(set) var background: String = "Background"
-	private(set) var tableBackground: String = "TableBackground"
-	private(set) var cellBackground: String = "CellBackground"
-	private(set) var primaryTint: String = "PrimaryTint"
-	private(set) var secondaryTint: String = "SecondaryTint"
-	private(set) var tertiaryTint: String = "TertiaryTint"
+public protocol PWTheme {
+	var background: BackgroundColors { get }
+	var text: TextColors { get }
+	var signature: SignatureColors { get }
+}
 
-	init () {}
+public struct BackgroundColors {
+	var primary: String
+	var secondary: String
+	var tertiary: String
+
+	var primaryGrouped: String
+	var secondaryGrouped: String
+	var tertiaryGrouped: String
+}
+
+public struct TextColors {
+	var primary: String
+	var secondary: String
+	var tertiary: String
+}
+
+public struct SignatureColors {
+	var primary: String
+	var secondary: String
+	var primaryContrast: String
+	var secondaryContrast: String
+}
+
+struct PWDefaultTheme: PWTheme {
+	let background = BackgroundColors(primary: "PrimaryBackground",
+									  secondary: "SecondaryBackground",
+									  tertiary: "TertiaryBackground",
+									  primaryGrouped: "PrimaryGroupedBackground",
+									  secondaryGrouped: "SecondaryGroupedBackground",
+									  tertiaryGrouped: "TertiaryGroupedBackground")
+	let text = TextColors(primary: "PrimaryText",
+						  secondary: "SecondaryText",
+						  tertiary: "TertiaryText")
+	let signature = SignatureColors(primary: "PrimarySignature",
+									secondary: "SecondarySignature",
+									primaryContrast: "PrimaryContrast",
+									secondaryContrast: "SecondaryContrast")
 }

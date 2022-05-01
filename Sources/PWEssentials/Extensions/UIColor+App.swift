@@ -6,94 +6,60 @@
 //
 
 import UIKit
-import SwiftUI
 
 public extension UIColor {
-	// MARK: App Colors
-	static var appPrimary: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.primary) ?? .systemGreen
+	// MARK: Background
+	static var appPrimaryBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.primary) ?? .systemBackground
 	}
 
-	static var appSecondary: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.secondary) ?? .systemGreen
+	static var appSecondaryBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.secondary) ?? .secondarySystemBackground
 	}
 
-	static var appTertiary: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.tertiary) ?? .systemGreen
+	static var appTertiaryBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.tertiary) ?? .tertiarySystemBackground
 	}
 
-	static var appQuarternary: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.quarternary) ?? .systemGreen
+	static var appPrimaryGroupedBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.primaryGrouped) ?? .systemGroupedBackground
 	}
 
-	// MARK: Background Colors
-	static var appBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.background) ?? .systemBackground
+	static var appSecondaryGroupedBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.secondaryGrouped) ?? .secondarySystemGroupedBackground
 	}
 
-	static var appTableBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.tableBackground) ?? .systemGroupedBackground
+	static var appTertiaryGroupedBackground: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.background.tertiaryGrouped) ?? .tertiarySystemGroupedBackground
 	}
 
-	static var appCellBackground: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.cellBackground) ?? .secondarySystemGroupedBackground
+	// MARK: Text
+	static var appPrimaryText: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.text.primary) ?? .label
 	}
 
-	// MARK: Tint Colors
-	static var appPrimaryTint: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.primaryTint) ?? .label
+	static var appSecondaryText: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.text.secondary) ?? .secondaryLabel
 	}
 
-	static var appSecondaryTint: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.secondaryTint) ?? .secondaryLabel
+	static var appTertiaryText: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.text.tertiary) ?? .tertiaryLabel
 	}
 
-	static var appTertiaryTint: UIColor {
-		UIColor(named: PWThemeManager.shared.currentTheme.tertiaryTint) ?? .tertiaryLabel
-	}
-}
-
-public extension Color {
-	// MARK: App Colors
-	static var appPrimary: Color {
-		Color(UIColor.appPrimary)
+	// MARK: Signature
+	static var appPrimarySignature: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.signature.primary) ?? .systemCyan
 	}
 
-	static var appSecondary: Color {
-		Color(UIColor.appSecondary)
+	static var appSecondarySignature: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.signature.secondary) ?? .systemCyan
 	}
 
-	static var appTertiary: Color {
-		Color(UIColor.appTertiary)
+	static var appPrimaryContrast: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.signature.primaryContrast) ?? .systemCyan
 	}
 
-	static var appQuarternary: Color {
-		Color(UIColor.appQuarternary)
-	}
-
-	// MARK: Background Colors
-	static var appBackground: Color {
-		Color(UIColor.appBackground)
-	}
-
-	static var appTableBackground: Color {
-		Color(UIColor.appTableBackground)
-	}
-
-	static var appCellBackground: Color {
-		Color(UIColor.appCellBackground)
-	}
-
-	// MARK: Tint Colors
-	static var appPrimaryTint: Color {
-		Color(UIColor.appPrimaryTint)
-	}
-
-	static var appSecondaryTint: Color {
-		Color(UIColor.appSecondaryTint)
-	}
-
-	static var appTertiaryTint: Color {
-		Color(UIColor.appTertiaryTint)
+	static var appSecondaryContrast: UIColor {
+		UIColor(named: PWThemeManager.shared.currentTheme.signature.secondaryContrast) ?? .systemCyan
 	}
 }
